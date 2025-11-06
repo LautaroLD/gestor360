@@ -1,45 +1,90 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
+import { Tabs } from 'expo-router'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+  const insets = useSafeAreaInsets()
   return (
     <Tabs
+      initialRouteName='index'
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        headerStatusBarHeight: insets.top,
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#dc2626',
+        },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: 'white',
+        tabBarActiveBackgroundColor: '#b91c1c',
+        tabBarInactiveTintColor: 'white',
+
+        tabBarStyle: {
+          backgroundColor: '#dc2626',
+        },
+        tabBarHideOnKeyboard: true,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Inicio',
+          // header: () => {
+          //   return <HeaderComponent title='Inicio' />
+          // },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name='home' color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name='(orders)'
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Mis pedidos',
+          // header: () => {
+          //   return <HeaderComponent title='Mis pedidos' />
+          // },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name='receipt' color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='(business)'
+        options={{
+          title: 'Mis negocios',
+          // header: () => {
+          //   return <HeaderComponent title='Mis negocios' />
+          // },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name='store' color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='charts'
+        options={{
+          title: 'Estadísticas',
+          // header: () => {
+          //   return <HeaderComponent title='Ajustes' />
+          // },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name='chart-bar' color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name='profile'
+        options={{
+          title: 'Perfil',
+          // header: () => {
+          //   return <HeaderComponent title='Perfil' />
+          // },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name='user-circle' color={color} size={size} />
+          ),
         }}
       />
     </Tabs>
-  );
+  )
 }
