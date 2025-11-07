@@ -148,13 +148,25 @@ export default function CatalogScreen() {
                   <View
                     className={`flex-row items-center gap-2 p-3 rounded-full  ${pressed ? 'bg-gray-200' : ''}`}
                   >
-                    <FontAwesome5 name='share' size={24} color='black' />
+                    <FontAwesome5 name='share' size={24} color='white' />
                   </View>
                 )
               }}
             </Pressable>
-            <Text>{catalog?.business.name}</Text>
-            <Text>{catalog?.business.address}</Text>
+            <View className='bg-primary py-4 px-6 rounded-lg gap-2 w-full'>
+              <View className='flex-row items-center gap-2'>
+                <FontAwesome5 size={20} name='store' color='white' />
+                <Text className='text-3xl font-bold text-surface '>
+                  {catalog.business?.name}
+                </Text>
+              </View>
+              <View className='flex-row items-center gap-2'>
+                <FontAwesome5 size={20} name='map-marker-alt' color='white' />
+                <Text className='text-surface'>
+                  {catalog.business?.address}
+                </Text>
+              </View>
+            </View>
           </View>
         )}
       />

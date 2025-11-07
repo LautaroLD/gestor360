@@ -26,7 +26,7 @@ export default function OrdersComponent({
   if (isPending) return <Text>Loading...</Text>
   if (error) return <Text>{error.message}</Text>
   return (
-    <View className='gap-4 bg-surface rounded-lg p-4'>
+    <View className='gap-4 surface rounded-lg '>
       <View className='gap-2'>
         <ButtonComponent
           onPress={() => {

@@ -11,7 +11,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
-import { FlatList, Modal, Pressable, Text, View } from 'react-native'
+import { FlatList, Modal, Pressable, Text, TextInput, View } from 'react-native'
 interface NewOrderFormProps {
   clientName: string
   clientPhone: string
@@ -24,6 +24,8 @@ export default function NewOrder() {
   const [showModal, setShowModal] = useState(false)
   const [clientSelected, setClientSelected] = useState<Client | null>()
   const [showTimepicker, setShowTimepicker] = useState(false)
+  const [search, setSearch] = useState('')
+  const [productsFiltered, setProductsFiltered] = useState<Product[]>([])
   const [showDatepicker, setShowDatepicker] = useState(false)
   const { business } = useStore((state) => state)
   const queryClient = useQueryClient()
@@ -57,8 +59,7 @@ export default function NewOrder() {
     queryKey: ['products', business?.id],
     queryFn: async () => {
       const res = await api.get<Product[]>('/product/business/' + business?.id)
-
-      return res
+      return res.data
     },
   })
   const createOrder = useMutation({
@@ -91,7 +92,7 @@ export default function NewOrder() {
         exact: false,
       })
       queryClient.refetchQueries({ queryKey: ['charts'], exact: false })
-
+      methods.reset()
       router.back()
     },
     onError: (error) => console.log(error),
@@ -142,6 +143,13 @@ export default function NewOrder() {
       methods.setValue('clientId', clientSelected.id)
     }
   }, [clientSelected])
+  useEffect(() => {
+    if (products) {
+      setProductsFiltered(
+        products?.filter((p) => p.title.includes(search)) || []
+      )
+    }
+  }, [search])
   if (isPending) return <Text>Loading...</Text>
   if (error) return <Text>{error.message}</Text>
   return (
@@ -283,15 +291,26 @@ export default function NewOrder() {
             )}
           />
           <View className='gap-2'>
-            <Text className='text-lg font-bold'>
+            <Text className='text-lg font-bold text-center'>
               Selecciona los productos para este pedido
             </Text>
+            <TextInput
+              placeholder='Buscar producto'
+              className='  bg-surface rounded-lg px-4'
+              value={search}
+              onChangeText={setSearch}
+            />
             <View className='gap-2'>
               <View className='flex-grow gap-2'>
-                {products.data.map((p) => (
+                {productsFiltered?.length === 0 && (
+                  <Text className='text-center p-4 bg-surface rounded-lg'>
+                    No se encontraron productos
+                  </Text>
+                )}
+                {productsFiltered?.map((p) => (
                   <View
                     key={p.id}
-                    className='bg-slate-100 p-3 rounded-lg flex-row justify-between items-center'
+                    className='bg-surface p-3 rounded-lg flex-row justify-between items-center'
                   >
                     <View className='gap-1'>
                       <Text className='font-bold'>{p.title}</Text>
@@ -338,7 +357,7 @@ export default function NewOrder() {
             </View>
           </View>
           <Text className='text-lg font-bold'>Resumen del pedido</Text>
-          <View className='p-4 bg-slate-200 rounded-lg'>
+          <View className='p-4 bg-surface rounded-lg'>
             {methods.watch('items').length === 0 && (
               <Text className='text-center'>
                 No hay productos seleccionados
