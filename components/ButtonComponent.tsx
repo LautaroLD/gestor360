@@ -1,5 +1,4 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
-import React from 'react'
 import { Pressable, Text, TouchableOpacityProps, View } from 'react-native'
 interface ButtonComponentProps extends TouchableOpacityProps {
   children?: React.ReactNode
@@ -18,7 +17,7 @@ const ButtonComponent = ({
     <Pressable {...props}>
       {({ pressed }) => (
         <View
-          className={`${primary ? 'bg-primary' : 'bg-transparent '} p-3 justify-center  items-center ${pressed ? 'opacity-60' : 'opacity-100'}`}
+          className={`${primary ? 'bg-primary' : 'bg-transparent '} p-3 justify-center rounded-lg items-center ${pressed ? 'opacity-60' : 'opacity-100'}`}
         >
           {loading && (
             <FontAwesome5
@@ -30,7 +29,7 @@ const ButtonComponent = ({
           )}
           {!loading && (
             <Text
-              className={` ${primary ? 'text-white' : ' underline'} font-bold text-xl ${textColor ? `text-[${textColor}]` : 'text-black'} `}
+              className={` ${primary && 'text-white'} font-bold text-xl ${textColor ? `text-[${textColor}]` : 'text-black'} `}
             >
               {children}
             </Text>

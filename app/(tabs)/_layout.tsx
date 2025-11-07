@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { Tabs } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,17 +10,17 @@ export default function TabLayout() {
       initialRouteName='index'
       screenOptions={{
         headerStatusBarHeight: insets.top,
-        headerTintColor: 'white',
+        headerTintColor: Colors.light.neutral,
         headerStyle: {
-          backgroundColor: '#dc2626',
+          backgroundColor: Colors.light.primary,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: 'white',
-        tabBarActiveBackgroundColor: '#b91c1c',
-        tabBarInactiveTintColor: 'white',
+        tabBarActiveTintColor: Colors.light.primary,
+        tabBarActiveBackgroundColor: Colors.light.neutral,
+        tabBarInactiveTintColor: Colors.light.neutral,
 
         tabBarStyle: {
-          backgroundColor: '#dc2626',
+          backgroundColor: Colors.light.primary,
         },
         tabBarHideOnKeyboard: true,
       }}

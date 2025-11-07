@@ -59,7 +59,7 @@ export default function OrderScreen() {
     <View className='flex-1 p-5 gap-4'>
       {open && (
         <View className='absolute inset-0 bg-black/50 z-10'>
-          <View className='bg-slate-100 w-3/4  m-auto p-5 gap-5 rounded-lg'>
+          <View className='bg-surface w-3/4  m-auto p-5 gap-5 rounded-lg'>
             <Text className='text-center text-2xl font-bold'>
               ¿Seguro que deseas eliminar el pedido?
             </Text>
@@ -73,14 +73,16 @@ export default function OrderScreen() {
         </View>
       )}
       {/* <BackButtonComponent text='Detalles del pedido' /> */}
-      <Text className='text-center underline'>{order?.data?.id}</Text>
+      <Text selectable className='text-center underline'>
+        {order?.data?.id}
+      </Text>
       <OrderItem o={order?.data as Order} />
       {/* {order?.data.status === 'pending' && ( */}
-      <View className='gap-2 border rounded-lg p-2'>
-        <Text className='text-xl text-center'>Actualizar estado</Text>
+      <View className='gap-4 bg-surface rounded-lg p-4'>
+        <Text className='text-xl font-bold text-center'>Actualizar estado</Text>
         <View className=' gap-4 '>
           <ButtonComponent
-            className='bg-green-200 border-green-600 rounded-lg'
+            className='bg-green-100 border-green-700 border rounded-lg'
             onPress={() => {
               updateOrderStatus.mutate('ready')
             }}
@@ -88,7 +90,7 @@ export default function OrderScreen() {
             Preparado
           </ButtonComponent>
           <ButtonComponent
-            className=' border-blue-600 bg-blue-200 rounded-lg'
+            className=' border-blue-700 border bg-blue-100 rounded-lg'
             onPress={() => {
               updateOrderStatus.mutate('delivered')
             }}
@@ -96,7 +98,7 @@ export default function OrderScreen() {
             Entregado
           </ButtonComponent>
           <ButtonComponent
-            className='bg-red-200 border-red-600 rounded-lg'
+            className='bg-red-100 border-red-700 border rounded-lg'
             onPress={() => {
               updateOrderStatus.mutate('cancelled')
             }}
@@ -104,7 +106,7 @@ export default function OrderScreen() {
             Cancelado
           </ButtonComponent>
           <ButtonComponent
-            className='bg-slate-200 rounded-lg'
+            className='bg-slate-100 border rounded-lg'
             onPress={() => {
               setOpen(true)
             }}

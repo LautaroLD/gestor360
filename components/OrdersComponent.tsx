@@ -26,7 +26,7 @@ export default function OrdersComponent({
   if (isPending) return <Text>Loading...</Text>
   if (error) return <Text>{error.message}</Text>
   return (
-    <>
+    <View className='gap-4 bg-surface rounded-lg p-4'>
       <View className='gap-2'>
         <ButtonComponent
           onPress={() => {
@@ -40,32 +40,33 @@ export default function OrdersComponent({
       <View>
         <Text className='text-2xl font-bold'>Pedidos pendientes</Text>
         <View className='  rounded-lg gap-2 mt-2'>
-          {businessData?.length === 0 && (
-            <Text className='w-full text-center font-bold text-gray-500 bg-gray-200 py-6'>
+          {businessData.filter((o) => o.status === 'pending')?.length === 0 && (
+            <Text className='w-full text-center font-bold py-6'>
               No tienes pedidos pendientes
             </Text>
           )}
 
-          {businessData?.map((o) => {
-            if (o.status !== 'pending') return null
-            return (
-              <TouchableOpacity
-                className='w-full'
-                key={o.id}
-                onPress={() => {
-                  router.push(
-                    ('/(tabs)/(orders)/orderScreen' +
-                      '?id=' +
-                      o.id) as RelativePathString
-                  )
-                }}
-              >
-                <OrderItem o={o} />
-              </TouchableOpacity>
-            )
-          })}
+          {businessData
+            .filter((o) => o.status === 'pending')
+            ?.map((o) => {
+              return (
+                <TouchableOpacity
+                  className='w-full'
+                  key={o.id}
+                  onPress={() => {
+                    router.push(
+                      ('/(tabs)/(orders)/orderScreen' +
+                        '?id=' +
+                        o.id) as RelativePathString
+                    )
+                  }}
+                >
+                  <OrderItem o={o} />
+                </TouchableOpacity>
+              )
+            })}
         </View>
       </View>
-    </>
+    </View>
   )
 }

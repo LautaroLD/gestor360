@@ -1,17 +1,24 @@
-import ButtonComponent from '@/components/ButtonComponent'
 import ButtonFilterOrders from '@/components/ButtonFilterOrders'
 import OrderItem from '@/components/OrderItem'
 import ScrollLayout from '@/components/ScrollLayout'
 import { Order } from '@/models'
 import api from '@/services/config'
 import { useStore } from '@/services/store'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { useQuery } from '@tanstack/react-query'
 import { RelativePathString, useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 export default function IndexOrders() {
   const { business } = useStore((state) => state)
+  const [search, setSearch] = useState('')
   const [ordersFiltered, setOrdersFiltered] = useState<Order[]>([])
   const [type, setType] = useState<
     'all' | 'pending' | 'ready' | 'cancelled' | 'delivered'
@@ -23,6 +30,7 @@ export default function IndexOrders() {
     isPending,
     isRefetching,
     error,
+    refetch,
   } = useQuery({
     queryKey: ['orders', business?.id],
     queryFn: async () => {
@@ -31,41 +39,55 @@ export default function IndexOrders() {
   })
   useEffect(() => {
     if (type === 'all') {
-      setOrdersFiltered(orders || [])
+      setOrdersFiltered(
+        orders?.filter((o) =>
+          o.client.name.toLowerCase().includes(search.toLowerCase())
+        ) || []
+      )
     } else {
-      setOrdersFiltered(orders?.filter((o) => o.status === type) || [])
+      setOrdersFiltered(
+        orders?.filter(
+          (o) =>
+            o.status === type &&
+            o.client.name.toLowerCase().includes(search.toLowerCase())
+        ) || []
+      )
     }
-  }, [type, orders])
-
-  if (isPending || isRefetching) {
+  }, [type, orders, search])
+  if (isPending) {
     return <Text>Loading...</Text>
   }
   if (error) {
     return <Text>{error.message}</Text>
   }
   return (
-    // <ScrollLayout>
     <View className='gap-4 flex-1 p-5'>
-      <ButtonComponent
-        onPress={() => {
-          router.push('/(tabs)/(orders)/newOrder')
-        }}
-        primary
-      >
-        + Nuevo pedido
-      </ButtonComponent>
       {!orders?.length && (
-        <View className='p-4 bg-gray-200 rounded-lg'>
+        <View className='p-4 bg-surface rounded-lg'>
           <Text className='text-xl text-center'>No tienes pedidos</Text>
         </View>
       )}
       {orders.length > 0 && (
         <>
           <View>
+            <View className='flex-row items-center max-w-full gap-6'>
+              <TextInput
+                placeholder='Buscar por nombre de cliente'
+                className='p-4 bg-surface rounded-lg  flex-1'
+                value={search}
+                onChangeText={setSearch}
+              />
+              <TouchableOpacity
+                onPress={() => refetch()}
+                className={isRefetching ? 'animate-spin' : ''}
+              >
+                <FontAwesome5 name='sync' size={20} color='black' />
+              </TouchableOpacity>
+            </View>
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal
-              className=' bg-slate-200 rounded-lg max-w-full '
+              className=' max-w-full '
               contentContainerClassName='gap-2 w-auto p-2 '
             >
               <ButtonFilterOrders
@@ -100,28 +122,43 @@ export default function IndexOrders() {
               />
             </ScrollView>
           </View>
-          <>
-            <ScrollLayout>
-              {ordersFiltered?.map((o) => (
-                <TouchableOpacity
-                  className='w-full'
-                  key={o.id}
-                  onPress={() => {
-                    router.push(
-                      ('/(tabs)/(orders)/orderScreen' +
-                        '?id=' +
-                        o.id) as RelativePathString
-                    )
-                  }}
-                >
-                  <OrderItem o={o} />
-                </TouchableOpacity>
-              ))}
-            </ScrollLayout>
-          </>
+          {isRefetching ? (
+            <View className='w-full items-center p-6'>
+              <FontAwesome5
+                name='spinner'
+                size={30}
+                color='black'
+                className='animate-spin'
+              />
+            </View>
+          ) : (
+            <>
+              {!ordersFiltered?.length && (
+                <View className='p-4 bg-surface rounded-lg'>
+                  <Text className='text-xl text-center'>No tienes pedidos</Text>
+                </View>
+              )}
+              <ScrollLayout>
+                {ordersFiltered?.map((o) => (
+                  <TouchableOpacity
+                    className='w-full'
+                    key={o.id}
+                    onPress={() => {
+                      router.push(
+                        ('/(tabs)/(orders)/orderScreen' +
+                          '?id=' +
+                          o.id) as RelativePathString
+                      )
+                    }}
+                  >
+                    <OrderItem o={o} />
+                  </TouchableOpacity>
+                ))}
+              </ScrollLayout>
+            </>
+          )}
         </>
       )}
     </View>
-    // </ScrollLayout>
   )
 }

@@ -1,6 +1,7 @@
 import OrdersComponent from '@/components/OrdersComponent'
 import ScrollLayout from '@/components/ScrollLayout'
 import { useStore } from '@/services/store'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { Link } from 'expo-router'
 import { Text, View } from 'react-native'
 
@@ -20,9 +21,17 @@ export default function Index() {
   }
   return (
     <ScrollLayout>
-      <View>
-        <Text className='text-3xl font-bold'>{business?.name}</Text>
-        <Text>{business?.address}</Text>
+      <View className='bg-primary py-4 px-6 rounded-lg gap-2'>
+        <View className='flex-row items-center gap-2'>
+          <FontAwesome5 size={20} name='store' color='white' />
+          <Text className='text-3xl font-bold text-surface '>
+            {business?.name}
+          </Text>
+        </View>
+        <View className='flex-row items-center gap-2'>
+          <FontAwesome5 size={20} name='map-marker-alt' color='white' />
+          <Text className='text-surface'>{business?.address}</Text>
+        </View>
       </View>
       <OrdersComponent businessId={business?.id as string} />
     </ScrollLayout>
