@@ -11,13 +11,12 @@ const queryClient = new QueryClient()
 export default function RootLayout() {
   const [open, setOpen] = useState(false)
   async function onFetchUpdateAsync() {
-    setOpen(true)
-
     try {
       const update = await Updates.checkForUpdateAsync()
 
       if (update.isAvailable) {
         await Updates.fetchUpdateAsync()
+        setOpen(true)
       }
     } catch (error) {
       alert(`Error fetching latest Expo update: ${error}`)
