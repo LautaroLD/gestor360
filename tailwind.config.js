@@ -1,16 +1,22 @@
 // tailwind.config.js
+import { Colors } from './constants/Colors';
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
-        "primary": '#dc2626',
-        "secondary": '#b91c1c',
-        "teal": '#26dcdc',
-        "accent": '#f59e0b',
-        "surface": '#f8fafc',
-        "text": '#0f1724',
+        "primary": Colors.primary,
+        "secondary": Colors.secondary,
+        "card-neutral": Colors.card.neutral,
+        "card-info": Colors.card.info,
+        "card-warning": Colors.card.warning,
+        "card-success": Colors.card.success,
+        "card-error": Colors.card.error,
+        "text-dark": Colors.text.dark,
+        "text-light": Colors.text.light,
+        "background-light": Colors.background.light,
+        "background-dark": Colors.background.dark,
       },
     },
   },

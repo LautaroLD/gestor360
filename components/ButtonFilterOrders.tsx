@@ -17,7 +17,7 @@ export default function ButtonFilterOrders({
     <Pressable
       onPress={() => setType(type)}
       className={`p-2 rounded-lg max-h-fit
-        ${active ? 'bg-primary ' : 'bg-surface '}
+        ${active ? 'bg-primary ' : 'bg-background-light '}
         `}
     >
       <Text className={`${active ? 'text-white' : 'text-black'}`}>{text}</Text>

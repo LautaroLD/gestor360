@@ -66,7 +66,7 @@ export interface Order {
   status: OrderStatus
   orderProduct: OrderProduct[]
   total: number | string
-  deliveryDate: string
+  deliveryDate: Date
   deliveryTime: string
   createdAt: Date
   updatedAt: Date

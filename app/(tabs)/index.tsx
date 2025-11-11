@@ -1,7 +1,9 @@
 import OrdersComponent from '@/components/OrdersComponent'
 import ScrollLayout from '@/components/ScrollLayout'
+import { Colors } from '@/constants/Colors'
 import { useStore } from '@/services/store'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
+import { LinearGradient } from 'expo-linear-gradient'
 import { Link } from 'expo-router'
 import { Text, View } from 'react-native'
 
@@ -21,18 +23,23 @@ export default function Index() {
   }
   return (
     <ScrollLayout>
-      <View className='bg-primary py-4 px-6 rounded-lg gap-2'>
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        className='rounded-3xl shadow-2xl overflow-hidden p-5'
+        colors={[Colors.primary, Colors.secondary]}
+      >
         <View className='flex-row items-center gap-2'>
           <FontAwesome5 size={20} name='store' color='white' />
-          <Text className='text-3xl font-bold text-surface '>
+          <Text className='text-3xl font-bold text-text-light '>
             {business?.name}
           </Text>
         </View>
         <View className='flex-row items-center gap-2'>
           <FontAwesome5 size={20} name='map-marker-alt' color='white' />
-          <Text className='text-surface'>{business?.address}</Text>
+          <Text className='text-text-light'>{business?.address}</Text>
         </View>
-      </View>
+      </LinearGradient>
       <OrdersComponent businessId={business?.id as string} />
     </ScrollLayout>
   )

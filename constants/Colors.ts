@@ -1,5 +1,22 @@
+
 // colors.ts
 export const Colors = {
-  light: { primary: '#dc2626', accent: '#f59e0b', neutral: '#f8fafc', text: '#0f1724' },
-  dark:  { primary: '#b91c1c', accent: '#fbbf24', neutral: '#0f1724', text: '#e6eef8' },
-};
+  primary: '#dc2640',
+  secondary: '#b91c00',
+  text: 
+  {
+    light: '#f8fafc', 
+    dark: '#1e293b',
+  },
+  background: {
+    light: '#ffffff',
+    dark: '#0f172a',
+  },
+  card:{
+    neutral: '#f8fafc',
+    info: '#26dcdc',
+    warning: '#fbbf24',
+    success: '#22c55e',
+    error: '#ef4444',
+  },
+}

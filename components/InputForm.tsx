@@ -5,7 +5,7 @@ const InputForm = ({
   item,
 }: {
   item: {
-    label: string
+    label?: string
     key: string
     type?: KeyboardTypeOptions
     secureTextEntry?: boolean
@@ -14,6 +14,7 @@ const InputForm = ({
     maxLength?: number
     errorMessage?: string
     required?: boolean
+    placeholder?: string
   }
 }) => {
   const {
@@ -62,7 +63,7 @@ const InputForm = ({
               secureTextEntry={item.secureTextEntry ? true : false}
               keyboardType={item.type}
               className='border-b border-b-black px-2 placeholder:text-gray-500'
-              placeholder={item.label}
+              placeholder={item.placeholder || item.label}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}

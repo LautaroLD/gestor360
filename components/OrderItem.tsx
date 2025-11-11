@@ -1,10 +1,14 @@
 import { Order } from '@/models'
 import { Text, View } from 'react-native'
 import CurrencyText from './CurrencyText'
+import DateText from './DateText'
 
 export default function OrderItem({ o }: { o: Order }) {
   return (
-    <View key={o.id} className='p-4 bg-surface rounded-lg w-full gap-2'>
+    <View
+      key={o.id}
+      className='p-4 bg-background-light rounded-xl w-full gap-2'
+    >
       <View>
         <Text
           className={`absolute top-0 right-0 font-bold uppercase  border  px-2 rounded-bl-lg rounded-tr-lg
@@ -28,10 +32,10 @@ export default function OrderItem({ o }: { o: Order }) {
       <View>
         <Text className='font-bold'>Fecha</Text>
         <Text className='mx-2'>
-          Pedido: {new Date(o.createdAt).toLocaleDateString()}
+          Pedido: <DateText date={o.createdAt} />
         </Text>
         <Text className='mx-2'>
-          Entrega: {o.deliveryDate} {o.deliveryTime}
+          Entrega: <DateText date={o.deliveryDate} /> {o.deliveryTime}
         </Text>
       </View>
       <View>

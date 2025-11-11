@@ -54,10 +54,10 @@ export default function RootLayout() {
             primary
             onPress={async () => await Updates.reloadAsync()}
           >
-            Instalar
+            <Text className='text-white font-bold'>Actualizar</Text>
           </ButtonComponent>
           <ButtonComponent onPress={async () => setOpen(false)}>
-            Cancelar
+            <Text className='font-bold'>Cancelar</Text>
           </ButtonComponent>
         </View>
       </Modal>

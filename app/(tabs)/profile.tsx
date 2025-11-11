@@ -114,7 +114,7 @@ export default function Profile() {
             </Text>
           </View>
 
-          <View className='bg-surface rounded-lg'>
+          <View className='bg-background-light rounded-lg'>
             <View className='p-5'>
               <View className='flex-row items-center gap-3 mb-3'>
                 <View className='bg-red-600 rounded-xl p-3'>

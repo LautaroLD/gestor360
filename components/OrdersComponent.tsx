@@ -1,5 +1,6 @@
 import { Order } from '@/models'
 import api from '@/services/config'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { useQuery } from '@tanstack/react-query'
 import { RelativePathString, useRouter } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -26,7 +27,7 @@ export default function OrdersComponent({
   if (isPending) return <Text>Loading...</Text>
   if (error) return <Text>{error.message}</Text>
   return (
-    <View className='gap-4 surface rounded-lg '>
+    <View className='gap-4 rounded-lg '>
       <View className='gap-2'>
         <ButtonComponent
           onPress={() => {
@@ -34,7 +35,8 @@ export default function OrdersComponent({
           }}
           primary
         >
-          + Nuevo pedido
+          <FontAwesome5 name='plus' size={16} color='white' />
+          <Text className='text-white font-bold'>Nuevo Pedido</Text>
         </ButtonComponent>
       </View>
       <View>

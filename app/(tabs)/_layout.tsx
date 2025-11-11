@@ -10,17 +10,16 @@ export default function TabLayout() {
       initialRouteName='index'
       screenOptions={{
         headerStatusBarHeight: insets.top,
-        headerTintColor: Colors.light.neutral,
+        headerTintColor: Colors.text.light,
         headerStyle: {
-          backgroundColor: Colors.light.primary,
+          backgroundColor: Colors.primary,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: Colors.light.primary,
-        tabBarActiveBackgroundColor: Colors.light.neutral,
-        tabBarInactiveTintColor: Colors.light.neutral,
-
+        tabBarActiveTintColor: Colors.text.light,
+        tabBarActiveBackgroundColor: Colors.secondary,
+        tabBarInactiveTintColor: Colors.text.light,
         tabBarStyle: {
-          backgroundColor: Colors.light.primary,
+          backgroundColor: Colors.primary,
         },
         tabBarHideOnKeyboard: true,
       }}

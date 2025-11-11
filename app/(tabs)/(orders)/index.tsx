@@ -63,7 +63,7 @@ export default function IndexOrders() {
   return (
     <View className='gap-4 flex-1 p-5'>
       {!orders?.length && (
-        <View className='p-4 bg-surface rounded-lg'>
+        <View className='p-4 bg-background-light rounded-lg'>
           <Text className='text-xl text-center'>No tienes pedidos</Text>
         </View>
       )}
@@ -73,7 +73,7 @@ export default function IndexOrders() {
             <View className='flex-row items-center max-w-full gap-6'>
               <TextInput
                 placeholder='Buscar por nombre de cliente'
-                className='p-4 bg-surface rounded-lg  flex-1'
+                className='p-4 bg-background-light rounded-lg  flex-1'
                 value={search}
                 onChangeText={setSearch}
               />
@@ -134,7 +134,7 @@ export default function IndexOrders() {
           ) : (
             <>
               {!ordersFiltered?.length && (
-                <View className='p-4 bg-surface rounded-lg'>
+                <View className='p-4 bg-background-light rounded-lg'>
                   <Text className='text-xl text-center'>No tienes pedidos</Text>
                 </View>
               )}

@@ -1,8 +1,9 @@
-import { Business, User } from '@/models'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { Business, User } from '@/models';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 interface Store {
+  theme: 'light' | 'dark'
   user: User | null
   business: Business | null
   token: string | null
@@ -23,6 +24,7 @@ interface Store {
 export const useStore = create<Store>()(
   persist(
     (set) => ({
+      theme: 'light',
       user: null,
       business: null,
       token: null,
